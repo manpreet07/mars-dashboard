@@ -4,24 +4,15 @@ const baseUrl = 'https://marsdashboard.herokuapp.com'
 
 const store = Immutable.Map({
 	apod: {},
-	rovers: [
-		{
-			name: 'Curiosity'
-		},
-		{
-			name: 'Opportunity'
-		},
-		{
-			name: 'Spirit'
-		},
-	]
+	rover: {}
 })
 
 // add our markup to the page
 const root = document.getElementById('root')
 
 const updateStore = (async (newState) => {
-	const state = store.merge(store, newState);
+	const state = store.mergeDeep(newState);
+	console.log('state >>>>> ', state)
 	return state;
 })
 
@@ -36,11 +27,11 @@ const App = (async () => {
         <header></header>
         <main>
             <section>
-                <h3>Astronomy Pictue of the Day</h3>
+                <h2>Astronomy Pictue of the Day</h2>
                 ${image}
 			</section>
 		</main>
-		<h1>Select Mars Rovers from the dropdown</h1>
+		<h2>Select Mars Rovers to view recent images sent by the rover</h2>
 		<select id="rovers" onchange="roverData()">
 			<option value="" selected disabled hidden>Choose Mars Rover</option>
 			<option>Curiosity</option>
@@ -83,17 +74,25 @@ const getImageOfTheDay = (async () => {
 	return await updateStore(state)
 })
 
+const getRoverManifest = (async () => {
+	try {
+		const name = document.getElementById('rovers').value
+		const response = await axios.get(`${baseUrl}/${name.toLowerCase()}`);
+		const state = Immutable.Map(response.data);
+		return state
+	} catch (err) {
+		response = err.response
+		console.log('response:', response);
+		return response
+	}
+})
+
 const getRoverPhotos = (async () => {
 	try {
 		const name = document.getElementById('rovers').value
 		const response = await axios.get(`${baseUrl}/${name.toLowerCase()}/photos`);
-		const state = Immutable.Map({
-			rovers: [{
-				name,
-				photos: response.data
-			}]
-		});
-		return await updateStore(state);
+		const state = Immutable.Map(response.data);
+		return state
 	} catch (err) {
 		response = err.response
 		console.log('response:', response);
@@ -102,13 +101,23 @@ const getRoverPhotos = (async () => {
 })
 
 const roverData = (async () => {
-	const state = await getRoverPhotos();
-	const rover = document.getElementById('rovers').value
-	const html = `<h1>Rover: ${rover}</h1>`
+	const roverManifest = await getRoverManifest();
+	const roverPhotos = await getRoverPhotos();
+	const state = roverManifest.mergeDeep(roverPhotos);
+	const rover = state.get('rover');
+	console.log('rover state photos >>>>> ', state.get('photos'));
+
+	const roverName = document.getElementById('rovers').value
+	const html = `<div>
+				<h3>Rover: ${roverName}</h3>
+				<p>Launch Date: ${rover.launch_date}</p>
+				<p>Landing Date: ${rover.landing_date}</p>
+				<p>Status: ${rover.status}</p>
+				<p>Total photos taken: ${rover.total_photos}</p>
+				</div>`
 	let innerHTML = '';
-	console.log('rover >>>>> ', state.get('rovers')[0])
-	const roverData = state.get('rovers')[0].photos;
-	for (const photo of roverData.photos) {
+	const photos = state.get('photos');
+	for (const photo of photos) {
 		innerHTML += `<div><p>${photo.camera.name}</p><img src="${photo.img_src}"/></div>`
 	}
 	const element = html + innerHTML;
