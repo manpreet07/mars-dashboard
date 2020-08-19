@@ -1,3 +1,6 @@
+const portNumber = +(process.env.PORT)
+const port = portNumber ? portNumber : 3000
+
 const store = Immutable.Map({
 	apod: {},
 	rovers: [
@@ -74,7 +77,7 @@ const imageOfTheDay = (async () => {
 })
 
 const getImageOfTheDay = (async () => {
-	const response = await axios.get(`http://localhost:3000/apod`)
+	const response = await axios.get(`http://localhost:${port}/apod`)
 	const state = Immutable.Map({ apod: response.data })
 	return await updateStore(state)
 })
@@ -82,7 +85,7 @@ const getImageOfTheDay = (async () => {
 const getRoverPhotos = (async () => {
 	try {
 		const name = document.getElementById('rovers').value
-		const response = await axios.get(`http://localhost:3000/${name.toLowerCase()}/photos`);
+		const response = await axios.get(`http://localhost:${port}/${name.toLowerCase()}/photos`);
 		const state = Immutable.Map({
 			rovers: [{
 				name,
