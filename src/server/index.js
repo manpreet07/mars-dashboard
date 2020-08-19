@@ -4,8 +4,9 @@ const bodyParser = require('body-parser')
 const axios = require('axios').default;
 const path = require('path')
 
-const app = express()
-const port = 3000
+const app = express();
+const portNumber = +(process.env.PORT)
+const port = portNumber ? portNumber : 3000
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -51,4 +52,4 @@ app.get('/spirit/photos', async (req, res) => {
         console.log('response:', response);
 	}
 })
-app.listen(process.env.PORT || port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
