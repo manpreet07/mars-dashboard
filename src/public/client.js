@@ -12,7 +12,6 @@ const root = document.getElementById('root')
 
 const updateStore = (async (newState) => {
 	const state = store.mergeDeep(newState);
-	console.log('state >>>>> ', state)
 	return state;
 })
 
@@ -105,8 +104,6 @@ const roverData = (async () => {
 	const roverPhotos = await getRoverPhotos();
 	const state = roverManifest.mergeDeep(roverPhotos);
 	const rover = state.get('rover');
-	console.log('rover state photos >>>>> ', state.get('photos'));
-
 	const roverName = document.getElementById('rovers').value
 	const html = `<div>
 				<h3>Rover: ${roverName}</h3>
