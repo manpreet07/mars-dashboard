@@ -51,4 +51,4 @@ app.get('/spirit/photos', async (req, res) => {
         console.log('response:', response);
 	}
 })
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(process.env.PORT || port, () => console.log(`Example app listening on port ${port}!`))
