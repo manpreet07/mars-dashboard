@@ -23,6 +23,16 @@ app.get('/apod', async (req, res) => {
 	}
 })
 
+app.get('/insight_weather', async (req, res) => {
+    try {
+		const response = await axios.get(`https://api.nasa.gov/insight_weather/?api_key=${process.env.API_KEY}&feedtype=json&ver=1.0`)
+		res.send(response.data)
+    } catch (err) {
+		response = err.response
+        console.log('response:', response);
+	}
+})
+
 app.get('/curiosity/photos', async (req, res) => {
     try {
         const response = await axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=${process.env.API_KEY}`)
