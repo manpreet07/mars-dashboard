@@ -1,6 +1,6 @@
 
-// const baseUrl = 'https://marsdashboard.herokuapp.com'
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'https://marsdashboard.herokuapp.com'
+// const baseUrl = 'http://localhost:3000'
 
 const store = Immutable.Map({
 	apod: {},
@@ -85,7 +85,6 @@ const getRoverManifest = (async () => {
 		return state
 	} catch (err) {
 		response = err.response
-		console.log('response:', response);
 		return response
 	}
 })
@@ -98,7 +97,6 @@ const getRoverPhotos = (async () => {
 		return state
 	} catch (err) {
 		response = err.response
-		console.log('response:', response);
 		return response
 	}
 })
@@ -110,7 +108,6 @@ const getMarsWeather = (async () => {
 		return state
 	} catch (err) {
 		response = err.response
-		console.log('response:', response);
 		return response
 	}
 })
@@ -141,7 +138,6 @@ const roverData = (async () => {
 const weather = (async () => {
 	const marsWeather = await getMarsWeather();
 	const weather = marsWeather.get('weather');
-	console.log('weather >>>>> ', weather)
 	const html = `<h3>Latest Weather at Elysium Planitia</h3>`
 	let innerHTML = '';
 	for (const sol of weather.sol_keys) {
