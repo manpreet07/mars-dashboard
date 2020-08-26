@@ -1,6 +1,6 @@
 
-const baseUrl = 'https://marsdashboard.herokuapp.com'
-// const baseUrl = 'http://localhost:3000'
+// const baseUrl = 'https://marsdashboard.herokuapp.com'
+const baseUrl = 'http://localhost:3000'
 
 const store = Immutable.Map({
 	apod: {},
@@ -128,9 +128,9 @@ const roverData = (async () => {
 	let innerHTML = '';
 	const photos = state.get('photos');
 	for (const photo of photos) {
-		innerHTML += `<div><p>${photo.camera.name}</p><img src="${photo.img_src}"/></div>`
+		innerHTML += `<div class="grid-item"><p>${photo.camera.name}</p><img src="${photo.img_src}"/></div>`
 	}
-	const element = html + innerHTML;
+	const element = html + `<div class="grid-container">` + innerHTML + `</div>`;
 	const rover_element = document.getElementById('rover-data');
 	rover_element.innerHTML = element;
 })
@@ -138,11 +138,11 @@ const roverData = (async () => {
 const weather = (async () => {
 	const marsWeather = await getMarsWeather();
 	const weather = marsWeather.get('weather');
-	const html = `<h3>Latest Weather at Elysium Planitia</h3>`
+	const html = `<h2>Latest Weather at Elysium Planitia</h2>`
 	let innerHTML = '';
 	for (const sol of weather.sol_keys) {
 		innerHTML += `<div>
-						<p>On Sol <b>${sol}</b> the temperature ranges from <b>${Math.round(weather[sol].AT.mn)}\xB0C</b> to <b>${Math.round(weather[sol].AT.mx)}\xB0C</b> with atmospheric pressure of <b>${Math.round(weather[sol].PRE.mn)} Pa.</b> to ${Math.round(weather[sol].AT.mn)} Pa.</b></p>
+						<p>On Sol <b>${sol}</b> the temperature ranges from <b>${Math.round(weather[sol].AT.mn)}\xB0C</b> to <b>${Math.round(weather[sol].AT.mx)}\xB0C</b> with atmospheric pressure of <b>${Math.round(weather[sol].PRE.mn)} Pa.</b> to <b>${Math.round(weather[sol].PRE.mx)} Pa.</b></p>
 					</div>`
 	}
 	const element = html + innerHTML;
