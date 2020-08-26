@@ -1,6 +1,6 @@
 
-// const baseUrl = 'https://marsdashboard.herokuapp.com'
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'https://marsdashboard.herokuapp.com'
+// const baseUrl = 'http://localhost:3000'
 
 const store = Immutable.Map({
 	apod: {},
