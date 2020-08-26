@@ -1,9 +1,10 @@
 
-const baseUrl = 'https://marsdashboard.herokuapp.com'
-// const baseUrl = 'http://localhost:3000'
+// const baseUrl = 'https://marsdashboard.herokuapp.com'
+const baseUrl = 'http://localhost:3000'
 
 const store = Immutable.Map({
 	apod: {},
+	weather: {},
 	rover: {}
 })
 
@@ -26,10 +27,12 @@ const App = (async () => {
         <header></header>
         <main>
             <section>
-                <h2>Astronomy Pictue of the Day</h2>
+                <h2>Astronomy Picture of the Day</h2>
                 ${image}
 			</section>
-		</main>
+		<div id="weather">
+		${weather()}
+		</div>
 		<h2>Select Mars Rovers to view recent images sent by the rover</h2>
 		<select id="rovers" onchange="roverData()">
 			<option value="" selected disabled hidden>Choose Mars Rover</option>
@@ -38,6 +41,7 @@ const App = (async () => {
 			<option>Spirit</option>
 		</select>
 		<div id="rover-data"></div>
+		</main>
     `
 })
 
@@ -81,7 +85,6 @@ const getRoverManifest = (async () => {
 		return state
 	} catch (err) {
 		response = err.response
-		console.log('response:', response);
 		return response
 	}
 })
@@ -94,7 +97,17 @@ const getRoverPhotos = (async () => {
 		return state
 	} catch (err) {
 		response = err.response
-		console.log('response:', response);
+		return response
+	}
+})
+
+const getMarsWeather = (async () => {
+	try {
+		const response = await axios.get(`${baseUrl}/insight_weather`);
+		const state = Immutable.Map({ weather: response.data });
+		return state
+	} catch (err) {
+		response = err.response
 		return response
 	}
 })
@@ -115,9 +128,24 @@ const roverData = (async () => {
 	let innerHTML = '';
 	const photos = state.get('photos');
 	for (const photo of photos) {
-		innerHTML += `<div><p>${photo.camera.name}</p><img src="${photo.img_src}"/></div>`
+		innerHTML += `<div class="grid-item"><p>${photo.camera.name}</p><img src="${photo.img_src}"/></div>`
+	}
+	const element = html + `<div class="grid-container">` + innerHTML + `</div>`;
+	const rover_element = document.getElementById('rover-data');
+	rover_element.innerHTML = element;
+})
+
+const weather = (async () => {
+	const marsWeather = await getMarsWeather();
+	const weather = marsWeather.get('weather');
+	const html = `<h2>Latest Weather at Elysium Planitia</h2>`
+	let innerHTML = '';
+	for (const sol of weather.sol_keys) {
+		innerHTML += `<div>
+						<p>On Sol <b>${sol}</b> the temperature ranges from <b>${Math.round(weather[sol].AT.mn)}\xB0C</b> to <b>${Math.round(weather[sol].AT.mx)}\xB0C</b> with atmospheric pressure of <b>${Math.round(weather[sol].PRE.mn)} Pa.</b> to <b>${Math.round(weather[sol].PRE.mx)} Pa.</b></p>
+					</div>`
 	}
 	const element = html + innerHTML;
-	const rover_element = document.getElementById('rover-data');
+	const rover_element = document.getElementById('weather');
 	rover_element.innerHTML = element;
 })
