@@ -8,7 +8,6 @@ const store = Immutable.Map({
 	rover: {}
 })
 
-// add our markup to the page
 const root = document.getElementById('root')
 
 const updateStore = (async (newState) => {
@@ -20,7 +19,6 @@ const render = (async () => {
 	root.innerHTML = await App()
 })
 
-// create content
 const App = (async () => {
 	const image = await imageOfTheDay();
 	return `${image}
@@ -40,7 +38,6 @@ const App = (async () => {
     `
 })
 
-// listening for load event because page should load before any JS is called
 window.addEventListener('load', async () => {
 	await render()
 })
