@@ -31,58 +31,26 @@ app.get('/insight_weather', async (req, res) => {
 	}
 })
 
-app.get('/curiosity/photos', async (req, res) => {
+app.get('/rovers/:name/photos', async (req, res) => {
     try {
-        const response = await axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=${process.env.API_KEY}`)
+		const name = req.params.name
+        const response = await axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/${name}/photos?sol=1000&api_key=${process.env.API_KEY}`)
 		res.send(response.data)
     } catch (err) {
 		console.log('response:', err.response);
 	}
 })
 
-app.get('/curiosity', async (req, res) => {
+app.get('/rovers/:name', async (req, res) => {
     try {
-        const response = await axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity?api_key=${process.env.API_KEY}`)
+		const name = req.params.name
+        const response = await axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/${name}?api_key=${process.env.API_KEY}`)
 		res.send(response.data)
     } catch (err) {
 		console.log('response:', err.response);
 	}
 })
 
-app.get('/opportunity/photos', async (req, res) => {
-    try {
-        const response = await axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=1000&api_key=${process.env.API_KEY}`)
-		res.send(response.data)
-    } catch (err) {
-		console.log('response:', err.response);
-	}
-})
 
-app.get('/opportunity', async (req, res) => {
-    try {
-        const response = await axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity?api_key=${process.env.API_KEY}`)
-		res.send(response.data)
-    } catch (err) {
-		console.log('response:', err.response);
-	}
-})
-
-app.get('/spirit/photos', async (req, res) => {
-    try {
-        const response = await axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/spirit/photos?sol=1000&api_key=${process.env.API_KEY}`)
-		res.send(response.data)
-    } catch (err) {
-		console.log('response:', err.response);
-	}
-})
-
-app.get('/spirit', async (req, res) => {
-    try {
-        const response = await axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/spirit?api_key=${process.env.API_KEY}`)
-		res.send(response.data)
-    } catch (err) {
-		console.log('response:', err.response);
-	}
-})
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
