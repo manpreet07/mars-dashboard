@@ -1,0 +1,12 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss";
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+#root {
+  background-color: var(--color-gray-900);
+  color: whitesmoke;
+  min-height: 100vh;
+  font-family: "Courier New", Courier, monospace;
+}
