@@ -22,7 +22,7 @@ jobs:
           at: .
       - run:
           name: Deploy to Firebase
-          command: npx firebase-tools deploy --only hosting --token $FIREBASE_TOKEN
+          command: npx firebase-tools deploy --only hosting:marsDashboard --token $FIREBASE_TOKEN
 
 workflows:
   build_and_deploy:
