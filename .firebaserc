@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "portfolio-ddeba"
-  }
+  },
+  "targets": {
+    "portfolio-ddeba": {
+      "hosting": {
+        "marsDashboard": [
+          "portfolio-ddeba"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
