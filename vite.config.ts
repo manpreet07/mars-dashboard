@@ -22,8 +22,6 @@ export default defineConfig({
     target: "esnext",
     minify: false,
     cssCodeSplit: false,
-  },
-  server: {
-    port: 5001,
+    outDir: "dist",
   },
 });
