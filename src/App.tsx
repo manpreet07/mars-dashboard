@@ -1,10 +1,10 @@
-import MarsDashboard from "./components/MarsDashboard";
+import Dashboard from "./components/Dashboard";
 import "./index.css";
 
 function App() {
   return (
     <div>
-      <MarsDashboard />
+      <Dashboard />
     </div>
   );
 }

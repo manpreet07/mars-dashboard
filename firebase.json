@@ -6,7 +6,7 @@
     "rewrites": [
       {
         "source": "/mars-dashboard/**",
-        "destination": "/mars-dashboard/index.html"
+        "destination": "/index.html"
       }
     ]
   }
