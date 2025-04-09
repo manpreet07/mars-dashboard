@@ -1,5 +1,28 @@
+import { useAPodQuery } from "../queries/useAPodQuery";
+import { APod } from "../types/APod";
+
 function Dashboard() {
-  return <div className="h-200">Mars Dashboard</div>;
+  let { data, error } = useAPodQuery();
+
+  if (error || !data) {
+    return <div>Loading...</div>;
+  }
+
+  const apod: APod = data;
+
+  return (
+    <div className="flex">
+      <div className="inline">
+        <div>
+          <div>Image of the Day</div>
+          <div>{apod.title}</div>
+        </div>
+        <img src={apod.url} />
+        <div>{apod.explanation}</div>
+        <div>{apod.date}</div>
+      </div>
+    </div>
+  );
 }
 
 export default Dashboard;
