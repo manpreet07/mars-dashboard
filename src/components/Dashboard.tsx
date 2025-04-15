@@ -1,5 +1,4 @@
-import { useAPodQuery } from "../queries/useAPodQuery";
-import { APod } from "../types/APod";
+import { APod, useAPodQuery } from "../queries/useAPodQuery";
 
 function Dashboard() {
   let { data, error } = useAPodQuery();
