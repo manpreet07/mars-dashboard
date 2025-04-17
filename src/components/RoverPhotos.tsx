@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useRoverPhotosBySolQuery } from "../queries/usePhotosQuery";
 import { Photo } from "../interfaces/interfaces";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 function RoverPhotos() {
   const { sol, roverName, camera } = useParams();
@@ -30,10 +31,14 @@ function RoverPhotos() {
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
         {roverPhotos.map((photo: Photo) => (
           <div className="flex" key={photo.id}>
-            <img
-              src={photo.img_src}
-              className="flex w-full h-full object-cover rounded-lg"
-            />
+            <TransformWrapper>
+              <TransformComponent>
+                <img
+                  src={photo.img_src}
+                  className="flex w-full h-full object-cover rounded-lg"
+                />
+              </TransformComponent>
+            </TransformWrapper>
           </div>
         ))}
       </div>
