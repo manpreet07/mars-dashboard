@@ -41,7 +41,6 @@ function RoverManifest(rover: Rover) {
       <div className="rounded-lg overflow-hidden">
         <div className="w-full h-full object-cover">{roverImage}</div>
       </div>
-      {/* <div className="text-xl text-center">{manifest.photo_manifest.name}</div> */}
       <div className="flex flex-wrap">
         <table className="w-full p-2">
           <thead>
@@ -78,29 +77,38 @@ function RoverManifest(rover: Rover) {
         <table className="w-full p-2 border-collapse border border-gray-400 ...">
           <thead>
             <tr>
-              <th className="p-2 border border-gray-400 ...">Sol</th>
-              <th className="p-2 border border-gray-400 ...">Earth Date</th>
-              <th className="p-2 border border-gray-400 ...">Cameras</th>
-              <th className="p-2 border border-gray-400 ...">Total Photos</th>
+              <th className="p-2 border border-gray-700 ...">Sol</th>
+              <th className="p-2 border border-gray-700 ...">Earth Date</th>
+              <th className="p-2 border border-gray-700 ...">Cameras</th>
+              <th className="p-2 border border-gray-700 ...">Total Photos</th>
             </tr>
           </thead>
           <tbody>
             {currentPhotos.map((photo: RoverManifestPhoto) => (
               <tr key={photo.sol}>
-                <td className="text-center p-2 border border-gray-400 ...">
-                  <Link to="" className="hover:text-blue-400">
+                <td className="text-center p-2 border border-gray-700 ...">
+                  <Link
+                    to={photo.sol.toString()}
+                    className="hover:text-blue-400"
+                  >
                     {photo.sol}
                   </Link>
                 </td>
-                <td className="text-center p-2 border border-gray-400 ...">
-                  <Link to="" className="hover:text-blue-400">
+                <td className="text-center p-2 border border-gray-700 ...">
+                  <Link
+                    to={photo.sol.toString()}
+                    className="hover:text-blue-400"
+                  >
                     {photo.earth_date}
                   </Link>
                 </td>
-                <td className="border p-2 border-gray-400 ...">
+                <td className="border p-2 border-gray-700 ...">
                   <div className="flex flex-wrap">
                     {photo.cameras.map((camera) => (
-                      <Link to="" className="hover:text-blue-400">
+                      <Link
+                        to={photo.sol.toString() + "/" + camera}
+                        className="hover:text-blue-400"
+                      >
                         <div key={camera} className="p-2">
                           {camera}
                         </div>
@@ -108,8 +116,11 @@ function RoverManifest(rover: Rover) {
                     ))}
                   </div>
                 </td>
-                <td className="text-center p-2 border border-gray-400 ...">
-                  <Link to="" className="hover:text-blue-400">
+                <td className="text-center p-2 border border-gray-700 ...">
+                  <Link
+                    to={photo.sol.toString()}
+                    className="hover:text-blue-400"
+                  >
                     {photo.total_photos}
                   </Link>
                 </td>

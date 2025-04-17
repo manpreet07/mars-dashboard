@@ -10,15 +10,17 @@ function Dashboard() {
   const apod: APod = data;
 
   return (
-    <div className="flex">
-      <div className="inline">
+    <div>
+      <div className="rounded-lg overflow-hidden aspect-square">
+        <img src={apod.url} className="w-full h-full object-cover" />
+      </div>
+      <div className="flex flex-wrap">
         <div>
-          <div>Image of the Day</div>
-          <div>{apod.title}</div>
+          <div className="p-2 text-2xl">Image of the Day</div>
+          <div className="p-2 text-xl">{apod.title}</div>
         </div>
-        <img src={apod.url} />
-        <div>{apod.explanation}</div>
-        <div>{apod.date}</div>
+        <div className="p-2 text-lg">{apod.explanation}</div>
+        <div className="p-2 text-lg">{apod.date}</div>
       </div>
     </div>
   );

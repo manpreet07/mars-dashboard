@@ -3,6 +3,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import "./index.css";
 import RoverManifest from "./components/RoverManifest";
+import RoverPhotos from "./components/RoverPhotos";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,9 @@ const AppRoutes = () => (
     <Route path="/curiosity" element={<RoverManifest name="curiosity" />} />
     <Route path="/spirit" element={<RoverManifest name="spirit" />} />
     <Route path="/opportunity" element={<RoverManifest name="opportunity" />} />
+
+    <Route path="/:roverName/:sol" element={<RoverPhotos />} />
+    <Route path="/:roverName/:sol/:camera" element={<RoverPhotos />} />
   </Routes>
 );
 
