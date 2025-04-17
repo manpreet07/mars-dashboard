@@ -1,8 +1,5 @@
 import { useParams } from "react-router-dom";
-import {
-  useRoverPhotosByEarthDateQuery,
-  useRoverPhotosBySolQuery,
-} from "../queries/usePhotosQuery";
+import { useRoverPhotosBySolQuery } from "../queries/usePhotosQuery";
 import { Photo } from "../interfaces/interfaces";
 
 function RoverPhotos() {
