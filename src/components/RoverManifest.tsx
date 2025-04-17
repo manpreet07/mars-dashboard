@@ -9,8 +9,11 @@ import spirit from "../assets/spirit.jpg";
 import opp from "../assets/opp.jpg";
 import cur from "../assets/cur.jpg";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function RoverManifest(rover: Rover) {
+  const [currentPage, setCurrentPage] = useState(1);
+
   const { data, error } = useRoverManifestQuery(rover.name);
 
   if (error || !data) {
@@ -34,7 +37,21 @@ function RoverManifest(rover: Rover) {
 
   let manifest: PhotoManifest = data;
 
-  const currentPhotos = manifest.photo_manifest.photos;
+  const allPhotos = manifest.photo_manifest.photos;
+
+  const photosPerPage = 25;
+
+  const totalPages = Math.ceil(allPhotos.length / photosPerPage);
+
+  const startIdx = (currentPage - 1) * photosPerPage;
+
+  const currentPhotos = allPhotos.slice(startIdx, startIdx + photosPerPage);
+
+  const goToPage = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   return (
     <div>
@@ -74,61 +91,89 @@ function RoverManifest(rover: Rover) {
         </table>
       </div>
       <div className="mt-5">
-        <table className="w-full p-2 border-collapse border border-gray-400 ...">
-          <thead>
-            <tr>
-              <th className="p-2 border border-gray-700 ...">Sol</th>
-              <th className="p-2 border border-gray-700 ...">Earth Date</th>
-              <th className="p-2 border border-gray-700 ...">Cameras</th>
-              <th className="p-2 border border-gray-700 ...">Total Photos</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentPhotos.map((photo: RoverManifestPhoto) => (
-              <tr key={photo.sol}>
-                <td className="text-center p-2 border border-gray-700 ...">
-                  <Link
-                    to={photo.sol.toString()}
-                    className="hover:text-blue-400"
-                  >
-                    {photo.sol}
-                  </Link>
-                </td>
-                <td className="text-center p-2 border border-gray-700 ...">
-                  <Link
-                    to={photo.sol.toString()}
-                    className="hover:text-blue-400"
-                  >
-                    {photo.earth_date}
-                  </Link>
-                </td>
-                <td className="border p-2 border-gray-700 ...">
-                  <div className="flex flex-wrap">
-                    {photo.cameras.map((camera) => (
-                      <Link
-                        to={photo.sol.toString() + "/" + camera}
-                        className="hover:text-blue-400"
-                      >
-                        <div key={camera} className="p-2">
-                          {camera}
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </td>
-                <td className="text-center p-2 border border-gray-700 ...">
-                  <Link
-                    to={photo.sol.toString()}
-                    className="hover:text-blue-400"
-                  >
-                    {photo.total_photos}
-                  </Link>
-                </td>
+        <div className="flex justify-end">
+          <div className="p-1">
+            <button
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`px-3 py-1 border rounded text-gray-400 ${
+                currentPage !== 1 ? "hover:text-blue-400 cursor-pointer" : ""
+              }`}
+            >
+              Prev
+            </button>
+          </div>
+          <div className="p-1">
+            <button
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`px-3 py-1 border rounded text-gray-400 ${
+                currentPage !== totalPages
+                  ? "hover:text-blue-400 cursor-pointer"
+                  : ""
+              }`}
+            >
+              Next
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-wrap">
+          <table className="w-full p-2 border-collapse border border-gray-400 ...">
+            <thead>
+              <tr>
+                <th className="p-2 border border-gray-700 ...">Sol</th>
+                <th className="p-2 border border-gray-700 ...">Earth Date</th>
+                <th className="p-2 border border-gray-700 ...">Cameras</th>
+                <th className="p-2 border border-gray-700 ...">Total Photos</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="mt-4 flex justify-center space-x-2"></div>
+            </thead>
+            <tbody>
+              {currentPhotos.map((photo: RoverManifestPhoto) => (
+                <tr key={photo.sol}>
+                  <td className="text-center p-2 border border-gray-700 ...">
+                    <Link
+                      to={photo.sol.toString()}
+                      className="hover:text-blue-400"
+                    >
+                      {photo.sol}
+                    </Link>
+                  </td>
+                  <td className="text-center p-2 border border-gray-700 ...">
+                    <Link
+                      to={photo.sol.toString()}
+                      className="hover:text-blue-400"
+                    >
+                      {photo.earth_date}
+                    </Link>
+                  </td>
+                  <td className="border p-2 border-gray-700 ...">
+                    <div className="flex flex-wrap">
+                      {photo.cameras.map((camera, index) => (
+                        <Link
+                          to={photo.sol.toString() + "/" + camera}
+                          className="hover:text-blue-400"
+                          key={index}
+                        >
+                          <div key={index} className="p-2">
+                            {camera}
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="text-center p-2 border border-gray-700 ...">
+                    <Link
+                      to={photo.sol.toString()}
+                      className="hover:text-blue-400"
+                    >
+                      {photo.total_photos}
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
