@@ -37,7 +37,9 @@ function RoverManifest(rover: Rover) {
 
   let manifest: PhotoManifest = data;
 
-  const allPhotos = manifest.photo_manifest.photos;
+  const allPhotos = manifest.photo_manifest.photos.sort(
+    (a, b) => b.sol - a.sol
+  );
 
   const photosPerPage = 25;
 
