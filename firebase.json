@@ -16,7 +16,7 @@
     ],
     "rewrites": [
       {
-        "source": "/mars-dashboard/**",
+        "source": "/**",
         "destination": "/index.html"
       }
     ]
