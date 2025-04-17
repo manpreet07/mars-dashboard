@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { RoverPhotos } from "../interfaces/interfaces";
-import { CAMERA } from "../types/cameraTypes";
 import { SPACE_API_URL } from "../App";
 
 async function getRoverLatestPhotos(roverName: string): Promise<RoverPhotos> {
@@ -16,7 +15,7 @@ async function getRoverLatestPhotos(roverName: string): Promise<RoverPhotos> {
 async function getRoverPhotosBySol(
   roverName: string,
   sol: number,
-  camera?: CAMERA,
+  camera?: string,
   page?: number
 ): Promise<RoverPhotos> {
   const url = SPACE_API_URL + `/api/v1/rovers/${roverName}/photos/by_sol`;
@@ -32,7 +31,7 @@ async function getRoverPhotosBySol(
 async function getRoverPhotosByEarthDate(
   roverName: string,
   earthDate: string,
-  camera?: CAMERA,
+  camera?: string,
   page?: number
 ): Promise<RoverPhotos> {
   const url =
@@ -56,11 +55,11 @@ export function useRoverLatestPhotosQuery(roverName: string) {
 export function useRoverPhotosBySolQuery(
   roverName: string,
   sol: number,
-  camera?: CAMERA,
+  camera?: string,
   page?: number
 ) {
   return useQuery({
-    queryKey: [`${roverName}`],
+    queryKey: [`${roverName}:${sol}`],
     queryFn: async () =>
       await getRoverPhotosBySol(roverName, sol, camera, page),
   });
@@ -69,11 +68,11 @@ export function useRoverPhotosBySolQuery(
 export function useRoverPhotosByEarthDateQuery(
   roverName: string,
   earthDate: string,
-  camera?: CAMERA,
+  camera?: string,
   page?: number
 ) {
   return useQuery({
-    queryKey: ["earthDate"],
+    queryKey: [`${roverName}:${earthDate}`],
     queryFn: async () =>
       await getRoverPhotosByEarthDate(roverName, earthDate, camera, page),
   });
