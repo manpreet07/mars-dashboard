@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useRoverPhotosBySolQuery } from "../queries/usePhotosQuery";
 import { Photo } from "../interfaces/interfaces";
+import { CAMERA } from "../types/cameraTypes";
 
 function Curiosity() {
   const roverName = "curiosity";
+  const [selectedCamera, setSelectedCamera] = useState<string>("");
 
-  const [sol, setSol] = useState<number>(1000);
+  const [sol, setSol] = useState<number>(10);
 
   if (!sol) {
-    setSol(1000);
+    setSol(10);
   }
 
   const { data, error } = useRoverPhotosBySolQuery(roverName, sol);
@@ -19,20 +21,39 @@ function Curiosity() {
 
   let roverPhotos: Photo[] = data?.photos.length ? data?.photos : [];
 
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCamera(e.target.value);
+  };
+
+  const filteredPhotos = selectedCamera
+    ? roverPhotos?.filter(
+        (photo: Photo) => photo.camera.name === selectedCamera
+      )
+    : roverPhotos;
+
   return (
     <div>
-      <div className="flex">Curiosity</div>
-      <label>Enter Sol:</label>
-      <input
-        type="number"
-        id="sol"
-        name="sol"
-        className="bg-white rounded-sm"
-      />
-      <div>Photos</div>
-
+      <div className="flex">Rover Name: {roverName}</div>
+      <div className="flex mb-5">
+        <div className="flex">Select a Camera</div>
+        <select
+          className="ml-10 bg-amber-50 text-black"
+          name="camers"
+          id="cameras"
+          onChange={handleSelect}
+        >
+          <option value="">All Cameras</option>
+          <option value={CAMERA.FHAZ}>{CAMERA.FHAZ}</option>
+          <option value={CAMERA.RHAZ}>{CAMERA.RHAZ}</option>
+          <option value={CAMERA.MAST}>{CAMERA.MAST}</option>
+          <option value={CAMERA.CHEMCAM}>{CAMERA.CHEMCAM}</option>
+          <option value={CAMERA.MAHLI}>{CAMERA.MAHLI}</option>
+          <option value={CAMERA.MARDI}>{CAMERA.MARDI}</option>
+          <option value={CAMERA.NAVCAM}>{CAMERA.NAVCAM}</option>
+        </select>
+      </div>
       <div className="grid grid-cols-4 gap-4 h">
-        {roverPhotos.map((photo: Photo) => (
+        {filteredPhotos.map((photo: Photo) => (
           <div className="flex" key={photo.id}>
             <img
               src={photo.img_src}
