@@ -5,7 +5,6 @@ import { CAMERA } from "../types/cameraTypes";
 import RoverManifest from "./RoverManifest";
 
 function Rovers(rover: Rover) {
-  console.log("name >>>>> ", rover.name);
   const [selectedCamera, setSelectedCamera] = useState<string>("");
 
   const [sol, setSol] = useState<number>(10);

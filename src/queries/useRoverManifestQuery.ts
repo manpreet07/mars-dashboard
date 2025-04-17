@@ -6,7 +6,6 @@ async function getRoverManifests(roverName: string): Promise<any> {
     import.meta.env.VITE_SPACE_API_URL +
     `/api/v1/rovers/manifests/${roverName}`;
 
-  console.log("url >>>>> ", url);
   const response = await axios.get(url);
 
   return response.data;

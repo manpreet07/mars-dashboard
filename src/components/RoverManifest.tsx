@@ -7,7 +7,8 @@ import { useRoverManifestQuery } from "../queries/useRoverManifestQuery";
 import per from "../assets/per.jpg";
 import spirit from "../assets/spirit.jpg";
 import opp from "../assets/opp.jpg";
-import cur from "../assets/cur.jpeg";
+import cur from "../assets/cur.jpg";
+import { Link } from "react-router-dom";
 
 function RoverManifest(rover: Rover) {
   const { data, error } = useRoverManifestQuery(rover.name);
@@ -33,63 +34,90 @@ function RoverManifest(rover: Rover) {
 
   let manifest: PhotoManifest = data;
 
+  const currentPhotos = manifest.photo_manifest.photos;
+
   return (
     <div>
-      <div className="flex">{roverImage}</div>
-      <div className="flex">Rover Name: {manifest.photo_manifest.name}</div>
-      <div className="flex">
-        Landing Date: {manifest.photo_manifest.landing_date}
+      <div className="rounded-lg overflow-hidden">
+        <div className="w-full h-full object-cover">{roverImage}</div>
       </div>
-      <div className="flex">
-        Launch Date: {manifest.photo_manifest.launch_date}
-      </div>
-      <div className="flex">Satus: {manifest.photo_manifest.status}</div>
-      <div className="flex">Maximum Sol: {manifest.photo_manifest.max_sol}</div>
-      <div className="flex">
-        Maximum Date: {manifest.photo_manifest.max_date}
-      </div>
-      <div className="flex">
-        Total Photos: {manifest.photo_manifest.total_photos}
-      </div>
-      <div className="flex mb-5">
-        <table className="border-collapse border border-gray-400">
+      {/* <div className="text-xl text-center">{manifest.photo_manifest.name}</div> */}
+      <div className="flex flex-wrap">
+        <table className="w-full p-2">
           <thead>
             <tr>
-              <th className="p-2 border-collapse border border-gray-400">
-                Sol
-              </th>
-              <th className="p-2 border-collapse border border-gray-400">
-                Earth Date
-              </th>
-              <th className="p-2 border-collapse border border-gray-400">
-                Total Photos
-              </th>
-              <th className="p-2 border-collapse border border-gray-400">
-                Cameras
-              </th>
+              <th className="p-2">Landing Date</th>
+              <th className="p-2">Launch Date</th>
+              <th className="p-2">Status</th>
+              <th className="p-2">Maximum Sol</th>
+              <th className="p-2">Total Photos</th>
             </tr>
           </thead>
           <tbody>
-            {manifest.photo_manifest.photos.map((photo: RoverManifestPhoto) => (
+            <tr>
+              <td className="text-center p-2">
+                {manifest.photo_manifest.launch_date}
+              </td>
+              <td className="text-center p-2">
+                {manifest.photo_manifest.landing_date}
+              </td>
+              <td className="text-center p-2">
+                {manifest.photo_manifest.status}
+              </td>
+              <td className="text-center p-2">
+                {manifest.photo_manifest.max_sol}
+              </td>
+              <td className="text-center p-2">
+                {manifest.photo_manifest.total_photos}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="mt-5">
+        <table className="w-full p-2 border-collapse border border-gray-400 ...">
+          <thead>
+            <tr>
+              <th className="p-2 border border-gray-400 ...">Sol</th>
+              <th className="p-2 border border-gray-400 ...">Earth Date</th>
+              <th className="p-2 border border-gray-400 ...">Cameras</th>
+              <th className="p-2 border border-gray-400 ...">Total Photos</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentPhotos.map((photo: RoverManifestPhoto) => (
               <tr key={photo.sol}>
-                <td className="p-2 border-collapse border border-gray-400">
-                  {photo.sol}
+                <td className="text-center p-2 border border-gray-400 ...">
+                  <Link to="" className="hover:text-blue-400">
+                    {photo.sol}
+                  </Link>
                 </td>
-                <td className="p-2 border-collapse border border-gray-400">
-                  {photo.earth_date}
+                <td className="text-center p-2 border border-gray-400 ...">
+                  <Link to="" className="hover:text-blue-400">
+                    {photo.earth_date}
+                  </Link>
                 </td>
-                <td className="p-2 border-collapse border border-gray-400">
-                  {photo.total_photos}
+                <td className="border p-2 border-gray-400 ...">
+                  <div className="flex flex-wrap">
+                    {photo.cameras.map((camera) => (
+                      <Link to="" className="hover:text-blue-400">
+                        <div key={camera} className="p-2">
+                          {camera}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </td>
-                <td className="p-2 border-collapse border border-gray-400">
-                  {photo.cameras.map((camera) => (
-                    <div key={camera}>{camera}</div>
-                  ))}
+                <td className="text-center p-2 border border-gray-400 ...">
+                  <Link to="" className="hover:text-blue-400">
+                    {photo.total_photos}
+                  </Link>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <div className="mt-4 flex justify-center space-x-2"></div>
       </div>
     </div>
   );
