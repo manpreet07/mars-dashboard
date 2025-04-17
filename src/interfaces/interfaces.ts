@@ -1,5 +1,6 @@
 export interface RoverPhotos {
   photos: Photo[];
+  latest_photos: Photo[];
 }
 
 export interface Camera {
@@ -19,9 +20,30 @@ export interface Photo {
 }
 
 export interface Rover {
-  id: number;
+  id?: number;
+  name: string;
+  landing_date?: string;
+  launch_date?: string;
+  status?: string;
+}
+
+export interface PhotoManifest {
+  photo_manifest: Manifest;
+}
+export interface Manifest {
   name: string;
   landing_date: string;
   launch_date: string;
   status: string;
+  max_sol: number;
+  max_date: string;
+  total_photos: number;
+  photos: RoverManifestPhoto[];
+}
+
+export interface RoverManifestPhoto {
+  sol: number;
+  cameras: string[];
+  total_photos: number;
+  earth_date: string;
 }

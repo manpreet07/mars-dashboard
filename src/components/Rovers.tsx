@@ -1,20 +1,19 @@
 import { useState } from "react";
 import { useRoverPhotosBySolQuery } from "../queries/usePhotosQuery";
-import { Photo } from "../interfaces/interfaces";
+import { Photo, Rover } from "../interfaces/interfaces";
 import { CAMERA } from "../types/cameraTypes";
+import RoverManifest from "./RoverManifest";
 
-function Spirit() {
-  const roverName = "spirit";
-
+function Rovers(rover: Rover) {
   const [selectedCamera, setSelectedCamera] = useState<string>("");
 
-  const [sol, setSol] = useState<number>(0);
+  const [sol, setSol] = useState<number>(10);
 
   if (!sol) {
-    setSol(0);
+    setSol(10);
   }
 
-  const { data, error } = useRoverPhotosBySolQuery(roverName, sol);
+  const { data, error } = useRoverPhotosBySolQuery(rover.name, sol);
 
   if (error) {
     return <div>Loading...</div>;
@@ -34,7 +33,8 @@ function Spirit() {
 
   return (
     <div>
-      <div className="flex">Rover Name: {roverName}</div>
+      <RoverManifest name={rover.name} />
+      <div className="flex">Rover Name: {rover.name}</div>
       <div className="flex mb-5">
         <div className="flex">Select a Camera</div>
         <select
@@ -46,9 +46,11 @@ function Spirit() {
           <option value="">All Cameras</option>
           <option value={CAMERA.FHAZ}>{CAMERA.FHAZ}</option>
           <option value={CAMERA.RHAZ}>{CAMERA.RHAZ}</option>
+          <option value={CAMERA.MAST}>{CAMERA.MAST}</option>
+          <option value={CAMERA.CHEMCAM}>{CAMERA.CHEMCAM}</option>
+          <option value={CAMERA.MAHLI}>{CAMERA.MAHLI}</option>
+          <option value={CAMERA.MARDI}>{CAMERA.MARDI}</option>
           <option value={CAMERA.NAVCAM}>{CAMERA.NAVCAM}</option>
-          <option value={CAMERA.PANCAM}>{CAMERA.PANCAM}</option>
-          <option value={CAMERA.MINITES}>{CAMERA.MINITES}</option>
         </select>
       </div>
       <div className="grid grid-cols-4 gap-4 h">
@@ -65,4 +67,4 @@ function Spirit() {
   );
 }
 
-export default Spirit;
+export default Rovers;
