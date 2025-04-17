@@ -20,16 +20,16 @@ function RoverManifest(rover: Rover) {
   let roverImage;
 
   if (rover.name === "perseverance") {
-    roverImage = <img src={per} />;
+    roverImage = <img src={new URL(per, import.meta.url).href} />;
   }
   if (rover.name === "spirit") {
-    roverImage = <img src={spirit} />;
+    roverImage = <img src={new URL(spirit, import.meta.url).href} />;
   }
   if (rover.name === "opportunity") {
-    roverImage = <img src={opp} />;
+    roverImage = <img src={new URL(opp, import.meta.url).href} />;
   }
   if (rover.name === "curiosity") {
-    roverImage = <img src={cur} />;
+    roverImage = <img src={new URL(cur, import.meta.url).href} />;
   }
 
   let manifest: PhotoManifest = data;
