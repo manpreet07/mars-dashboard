@@ -1,4 +1,4 @@
-# Mars Rover Dashboard
+# Mars Rover Dashboard (Micro Frontend App)
 
 **Tech Stack:** React + TypeScript + TailwindCss + [NASA API](https://api.nasa.gov/)
 
