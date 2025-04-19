@@ -1,4 +1,4 @@
-# Mars Rover Dashboard (Micro Frontend App)
+# Mars Dashboard (Micro Frontend App)
 
 **Tech Stack:** React + TypeScript + TailwindCss + [NASA API](https://api.nasa.gov/)
 
@@ -19,6 +19,10 @@ This project visualizes data from NASA's [Mars Rover Photos API](https://api.nas
 - Uses `axios` for API integration.
 - React Query for caching.
 - Responsive design with Tailwind CSS.
+
+## Hosting
+
+- Hosted in Firebase
 
 ## Live Demo
 
