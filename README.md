@@ -20,6 +20,10 @@ This project visualizes data from NASA's [Mars Rover Photos API](https://api.nas
 - React Query for caching.
 - Responsive design with Tailwind CSS.
 
+## Hosting
+
+- Hosted in Firebase
+
 ## Live Demo
 
 [https://manpreet-singh.me/mars-dashboard](https://manpreet-singh.me/mars-dashboard)
