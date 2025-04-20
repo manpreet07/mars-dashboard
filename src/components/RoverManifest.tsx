@@ -119,8 +119,8 @@ function RoverManifest(rover: Rover) {
             </button>
           </div>
         </div>
-        <div className="flex flex-wrap">
-          <table className="w-full p-2 border-collapse border border-gray-400 ...">
+        <div className="overflow-x-auto w-full">
+          <table className="min-w-full table-auto p-2 border-collapse border border-gray-400 ...">
             <thead>
               <tr>
                 <th className="p-2 border border-gray-700 ...">Sol</th>
