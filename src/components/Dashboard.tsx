@@ -11,7 +11,7 @@ function Dashboard() {
 
   return (
     <div>
-      <div className="rounded-lg overflow-hidden aspect-square">
+      <div className="rounded-lg overflow-hidden aspect-video">
         <img src={apod.url} className="w-full h-full object-cover" />
       </div>
       <div className="flex flex-wrap">
@@ -19,8 +19,13 @@ function Dashboard() {
           <div className="p-2 text-2xl">Image of the Day</div>
           <div className="p-2 text-xl">{apod.title}</div>
         </div>
-        <div className="p-2 text-lg">{apod.explanation}</div>
-        <div className="p-2 text-lg">{apod.date}</div>
+        <div>
+          <div className="p-2 text-lg">{apod.explanation}</div>
+          <div className="p-2 text-lg">Date: {apod.date}</div>
+        </div>
+        <div className="">
+          <div className="p-2 text-lg">Copyright: {apod.copyright}</div>
+        </div>
       </div>
     </div>
   );
