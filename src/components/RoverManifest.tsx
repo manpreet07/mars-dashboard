@@ -60,7 +60,7 @@ function RoverManifest(rover: Rover) {
       <div className="rounded-lg overflow-hidden">
         <div className="w-full h-full object-cover">{roverImage}</div>
       </div>
-      <div className="flex flex-wrap">
+      <div className="overflow-x-auto flex flex-wrap">
         <table className="w-full p-2">
           <thead>
             <tr>

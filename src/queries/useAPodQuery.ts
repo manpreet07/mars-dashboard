@@ -10,6 +10,7 @@ export interface APod {
   service_version: string;
   title: string;
   url: string;
+  copyright: string;
 }
 
 async function getAPod(): Promise<APod> {
