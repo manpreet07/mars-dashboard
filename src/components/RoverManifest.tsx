@@ -64,8 +64,8 @@ function RoverManifest(rover: Rover) {
         <table className="w-full p-2">
           <thead>
             <tr>
-              <th className="p-2">Landing Date</th>
               <th className="p-2">Launch Date</th>
+              <th className="p-2">Landing Date</th>
               <th className="p-2">Status</th>
               <th className="p-2">Maximum Sol</th>
               <th className="p-2">Total Photos</th>
