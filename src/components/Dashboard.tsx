@@ -1,3 +1,4 @@
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { APod, useAPodQuery } from "../queries/useAPodQuery";
 
 function Dashboard() {
@@ -11,12 +12,21 @@ function Dashboard() {
 
   return (
     <div>
-      <div className="rounded-lg overflow-hidden aspect-video">
-        <img src={apod.url} className="w-full h-full object-cover" />
+      <div className="flex justify-center overflow-hidden">
+        <TransformWrapper>
+          <TransformComponent>
+            <img
+              src={apod.url}
+              className="w-full h-full object-cover rounded-lg aspect-video"
+            />
+          </TransformComponent>
+        </TransformWrapper>
       </div>
       <div className="flex flex-wrap">
-        <div>
+        <div className="w-full h-full flex items-center justify-center">
           <div className="p-2 text-2xl">Image of the Day</div>
+        </div>
+        <div>
           <div className="p-2 text-xl">{apod.title}</div>
         </div>
         <div>
