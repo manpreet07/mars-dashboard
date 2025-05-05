@@ -47,7 +47,7 @@ function RoverPhotos() {
           <div className="relative max-w-4xl w-full p-5">
             <div className="w-full max-h-[90vh] rounded-lg">
               <RiCloseLargeLine
-                className="absolute z-50 top-8 right-8 text-white sm:text-xl lg:text-2xl"
+                className="absolute z-50 top-8 right-8 text-white sm:text-xl lg:text-2xl cursor-pointer"
                 onClick={() => setSelectedImage(null)}
               />
               <TransformWrapper>
